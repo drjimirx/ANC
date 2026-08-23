@@ -18,8 +18,8 @@ A Progressive Web App (PWA) for healthcare professionals in Nepal.
 - `app.js`           — All application logic + WHO coefficients
 - `service-worker.js`— Offline caching
 - `manifest.json`    — PWA manifest
-- `icon-192.png`     — App icon (add your own)
-- `icon-512.png`     — App icon (add your own)
+- `icon-192.png`     — App icon 
+- `icon-512.png`     — App icon 
 
 ## Install on Phone
 
