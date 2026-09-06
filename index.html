@@ -34,9 +34,9 @@
 
   <!-- Header -->
   <header>
-    <div class="header-badge">Antenatal Calculator</div>
-    <h1>Antenatal<br><em>Calculator</em></h1>
-    <p>EDD · POG · Fetal Growth · Blood Glucose — works offline</p>
+    
+    <h1>Obstetric<br><em>Calculator</em></h1>
+    
   </header>
 
   <!-- App-level tabs -->
@@ -56,12 +56,12 @@
     <div class="section-head">
       <div class="dot"></div>
       <h3>Today's Date</h3>
-      <span class="auto-tag" id="autoTag">Auto-filled</span>
+      <!-- <span class="auto-tag" id="autoTag">Auto-filled</span> -->
     </div>
     <div class="date-grid">
       <div class="field">
         <label>Year</label>
-        <input type="number" id="xYear" placeholder="e.g. 2081" min="2079" max="2086" oninput="onInputChange(this,'xYearErr')">
+        <input type="number" id="xYear" placeholder="e.g. 2081" min="2079" max="2095" oninput="onInputChange(this,'xYearErr')">
         <div class="field-error" id="xYearErr"></div>
       </div>
       <div class="field">
@@ -189,9 +189,8 @@
   </div>
 
   <!-- Footer -->
-  <footer>
-    <strong>@Jimi Syangbo</strong> · MBBS 4th Year, MMC<br>
-    Designed for healthcare professionals in Nepal
+ <footer >
+    <a href = "https://www.jimisyangbo.com.np/" target="_blank" style="text-decoration: none;" ><strong>by @Jimi Syangbo</strong> · MBBS 4th Year, MMC</a>
   </footer>
 
   </div><!-- end appPageOB -->
@@ -299,14 +298,11 @@
   <!-- FG Info -->
   <div class="fg-info-banner">
     Based on <strong>WHO Fetal Growth Charts</strong> (Kiserud et al., PLOS Medicine 2017 &mdash; <a href="https://github.com/jcarvalho45/whoFetalGrowth" target="_blank" style="color:var(--teal)">coefficients</a>).
-    Valid for GA 14&ndash;40 weeks. Percentiles: 2.5th, 5th, 10th, 25th, <strong>50th</strong>, 75th, 90th, 95th, 97.5th.
-    Measurements in <strong>mm</strong>; EFW in <strong>g</strong>. EFW auto-estimated via Hadlock III (AC+HC+FL).
-    Click any row in the results table to view its growth chart. For clinical guidance only.
+  
   </div>
 
-  <footer style="margin-top:20px;">
-    <strong>@Jimi Syangbo</strong> · MBBS 4th Year, MMC<br>
-    WHO Fetal Growth Charts · Global Reference
+   <footer >
+    <a href = "https://www.jimisyangbo.com.np/" target="_blank" style="text-decoration: none;" ><strong>by @Jimi Syangbo</strong> · MBBS 4th Year, MMC</a>
   </footer>
 
   </div><!-- end appPageFG -->
@@ -348,10 +344,6 @@
       <h3>OGTT Analysis <span style="font-size:10px;font-weight:400;color:var(--muted);text-transform:none;">(75g — GDM Diagnosis per IADPSG/WHO 2013)</span></h3>
     </div>
 
-    <div class="scan-note">
-      Enter values in <strong>mg/dL</strong>. GDM is diagnosed if <strong>any one</strong> value meets or exceeds the threshold:<br>
-      Fasting &ge; 92 &nbsp;·&nbsp; 1-hour &ge; 180 &nbsp;·&nbsp; 2-hour &ge; 153
-    </div>
 
     <div class="date-grid" style="margin-bottom:6px">
       <div class="field">
@@ -378,17 +370,16 @@
     </button>
   </div>
 
-  <div class="info-banner" style="margin-top:12px;">
+  <!-- <div class="info-banner" style="margin-top:12px;">
     <span>
       <strong>Conversion:</strong> mg/dL = mmol/L &times; 18.018 &nbsp;|&nbsp; mmol/L = mg/dL &divide; 18.018<br>
       <strong>OGTT criteria:</strong> IADPSG 2010 / WHO 2013 (75g oral glucose, venous plasma). Diagnosis requires &ge;1 abnormal value.
       Always confirm with clinical judgement.
     </span>
-  </div>
+  </div> -->
 
-  <footer style="margin-top:20px;">
-    <strong>@Jimi Syangbo</strong> · MBBS 4th Year, MMC<br>
-    IADPSG / WHO 2013 GDM Criteria
+   <footer >
+    <a href = "https://www.jimisyangbo.com.np/" target="_blank" style="text-decoration: none;" ><strong>by @Jimi Syangbo</strong> · MBBS 4th Year, MMC</a>
   </footer>
 
   </div><!-- end appPageBG -->
@@ -429,7 +420,7 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
-</script>
+ </script>
 
 </body>
 </html>
