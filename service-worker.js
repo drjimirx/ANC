@@ -1,5 +1,5 @@
 
-const CACHE = 'antenatal-v-5.2';
+const CACHE = 'antenatal-v-5.8';
 
 const URLS = [
   './',
