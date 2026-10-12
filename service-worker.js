@@ -1,10 +1,18 @@
-const CACHE = 'antenatal-v4.1.8';
+const CACHE = 'antenatal-v5';
 const URLS  = [
   './',
   './index.html',
-  './style.css?v=2',
-  './app.js?v=2',
-  './manifest.json'
+  './manifest.json',
+
+  // backing css and js
+  ".APP/back.js",
+  ".APP/back.css",
+
+ // new tools
+".APP/anc.html",
+".APP/bmi.html"
+
+
 ];
 
 self.addEventListener('install', function(e) {

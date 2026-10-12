@@ -1,7 +1,7 @@
 {
-  "name": "Antenatal Calculator",
-  "short_name": "ANC Calc",
-  "description": "EDD, POG and WHO Fetal Growth Calculator — Nepali Date",
+  "name": "MEDINNOVA",
+  "short_name": "JMED",
+  "description": "Mutiple Calculator for medical Proffesionals",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#020c14",

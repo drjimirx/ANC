@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Antenatal Calculator</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MEDINNOVA</title>
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
@@ -15,386 +15,101 @@
 <meta name="theme-color" content="#0f766e">
 <link rel="apple-touch-icon" href="icon-192.png">
 
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<!-- Styles -->
-<link rel="stylesheet" href="style.css?v=3">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#0F766E;--teal-b:#14B8A6;--green:#065F46;--mint:#CCFBF1;
+  --t1:#0F1923;--t2:#1E2D3D;--t3:#4A5568;--t4:#718096;
+  --border:#E2E8F0;--bg:#F8FAFC;--card:#FFFFFF;--result:#F0FDF9;
+  --shadow:0 1px 2px rgba(15,25,35,.04),0 4px 12px rgba(15,25,35,.05);
+  --shadow-h:0 2px 4px rgba(15,25,35,.05),0 12px 28px rgba(15,118,110,.12);
+  --serif:'DM Serif Display',Georgia,'Times New Roman',serif;
+  --sans:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --teal:#14B8A6;--teal-b:#2DD4BF;--mint:#0A2232;
+    --t1:#E2E8F0;--t2:#CBD5E1;--t3:#CBD5E1;--t4:#64748B;
+    --border:#1E3A4A;--bg:#020C14;--card:#0C1E2E;--result:#0A2232;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 12px rgba(154, 145, 145, 0.25);
+    --shadow-h:0 2px 4px rgba(0,0,0,.3),0 12px 28px rgba(20,184,166,.15);
+  }
+}
+:root[data-theme="dark"]{
+  --teal:#14B8A6;--teal-b:#2DD4BF;--mint:#0A2232;
+  --t1:#E2E8F0;--t2:#CBD5E1;--t3:#CBD5E1;--t4:#64748B;
+  --border:#1E3A4A;--bg:#020C14;--card:#0C1E2E;--result:#0A2232;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.25);
+  --shadow-h:0 2px 4px rgba(0,0,0,.3),0 12px 28px rgba(20,184,166,.15);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:16px;line-height:1.6;display:flex;flex-direction:column;transition:background .3s,color .3s}
+.theme{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:16px;width:40px;height:40px;border-radius:9px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;cursor:pointer;font-size:16px;transition:background .2s}
+.theme:hover{background:rgba(255,255,255,.2)}
+.theme:focus-visible,.card:focus-visible,footer a:focus-visible{outline:3px solid var(--teal-b);outline-offset:3px}
+.hero{position:relative;background:linear-gradient(135deg,#0F766E,#065F46);color:#fff;text-align:center;padding:clamp(72px,14vw,128px) 20px clamp(64px,10vw,96px)}
+.hero h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(2.5rem,9vw,5rem);letter-spacing:.04em;line-height:1.05}
+.hero p{margin:16px auto 0;max-width:34ch;color:#CCFBF1;font-size:clamp(.95rem,2.4vw,1.125rem)}
+main{flex:1;width:100%;max-width:1040px;margin:0 auto;padding:clamp(32px,6vw,56px) 20px}
+.grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:640px){.grid{grid-template-columns:repeat(2,1fr);gap:20px}}
+.card{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:112px;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);color:inherit;text-decoration:none;transition:transform .25s,box-shadow .25s,border-color .25s}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-h);border-color:var(--teal)}
+.card h2{margin:0;font-family:var(--serif);font-weight:400;font-size:1.375rem;line-height:1.2;color:var(--t1)}
+.card p{margin:6px 0 0;font-size:.9rem;color:var(--t3)}
+.arrow{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--result);color:var(--teal);border:1px solid var(--border);transition:background .25s,color .25s,transform .25s}
+.card:hover .arrow{background:var(--teal);color:#fff;transform:translateX(3px)}
+.arrow svg{width:18px;height:18px}
+footer{padding:28px 20px calc(28px + env(safe-area-inset-bottom,0px));text-align:center;border-top:1px solid var(--border);font-size:.875rem;color:var(--t4)}
+footer a{color:var(--t3)!important;transition:color .2s}
+footer a:hover{color:var(--teal)!important}
+footer strong{color:var(--teal);font-weight:600}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
-
 <body>
-<div class="page">
+<header class="hero">
+  <button class="theme" id="theme" aria-label="Toggle light and dark theme">◐</button>
+  <h1>JMED</h1>
+  <p>Med Innova Nepal</p>
+</header>
 
-  <!-- Theme toggle -->
-  <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle dark mode">
-    <span id="themeIcon">Dark</span>
-  </button>
-
-  <!-- Header -->
-  <header>
-    
-    <h1>Obstetric<br><em>Calculator</em></h1>
-    
-  </header>
-
-  <!-- App-level tabs -->
-  <div class="app-tabs">
-    <button class="app-tab active" id="appTabOB" onclick="switchApp('ob')">EDD / POG</button>
-    <button class="app-tab" id="appTabFG" onclick="switchApp('fg')">Fetal Growth</button>
-    <button class="app-tab" id="appTabBG" onclick="switchApp('bg')">Blood Glucose</button>
+<main>
+  <div class="grid">
+    <a class="card" href="APP/anc.html">
+      <div><h2>Antenatal calculator</h2><p> LMP, Fetal Growth Charts with Graphs and OGTT Analysis</p></div>
+      <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <a class="card" href="APP/bmi.html">
+      <div><h2>BMI</h2><p>Structured summaries organised by subject.</p></div>
+      <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <a class="card" href="#">
+      <div><h2>Practice questions</h2><p>Test your recall and review the explanations.</p></div>
+      <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <a class="card" href="#">
+      <div><h2>Quick reference</h2><p>Charts, values and checklists at a glance.</p></div>
+      <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
   </div>
+</main>
 
-  <!-- ═══ OB PAGE ═══ -->
-  <div class="app-page active" id="appPageOB">
+<footer>
+  <a href="https://www.jimisyangbo.com.np/" target="_blank" rel="noopener" style="text-decoration: none;"><strong>by @Jimi Syangbo</strong> · MBBS 4th Year, MMC</a>
+</footer>
 
-  <!-- Main card -->
-  <div class="card">
-
-    <!-- Today's Date (shared) -->
-    <div class="section-head">
-      <div class="dot"></div>
-      <h3>Today's Date</h3>
-      <!-- <span class="auto-tag" id="autoTag">Auto-filled</span> -->
-    </div>
-    <div class="date-grid">
-      <div class="field">
-        <label>Year</label>
-        <input type="number" id="xYear" placeholder="e.g. 2081" min="2079" max="2095" oninput="onInputChange(this,'xYearErr')">
-        <div class="field-error" id="xYearErr"></div>
-      </div>
-      <div class="field">
-        <label>Month</label>
-        <select id="xMonth" onchange="onSelectChange(this,'xMonthErr')"></select>
-        <div class="field-error" id="xMonthErr"></div>
-      </div>
-      <div class="field">
-        <label>Day</label>
-        <input type="number" id="xDay" placeholder="1–30" min="1" max="30" oninput="onInputChange(this,'xDayErr')">
-        <div class="field-error" id="xDayErr"></div>
-      </div>
-    </div>
-
-    <div class="section-sep"></div>
-
-    <!-- Method tabs -->
-    <div class="method-tabs">
-      <button class="method-tab active" id="tabLMP" onclick="switchMethod('lmp')">By LMP</button>
-      <button class="method-tab" id="tabScan" onclick="switchMethod('scan')">By Dating Scan</button>
-    </div>
-
-    <!-- LMP panel -->
-    <div class="method-panel active" id="panelLMP">
-      <div class="section-head">
-        <div class="dot" style="background:var(--gold);box-shadow:0 0 0 3px rgba(217,119,6,0.12)"></div>
-        <h3>First Day of LMP</h3>
-      </div>
-      <div class="date-grid">
-        <div class="field">
-          <label>Year</label>
-          <input type="number" id="yYear" placeholder="e.g. 2081" min="2079" max="2086" oninput="onInputChange(this,'yYearErr')">
-          <div class="field-error" id="yYearErr"></div>
-        </div>
-        <div class="field">
-          <label>Month</label>
-          <select id="yMonth" onchange="onSelectChange(this,'yMonthErr')"></select>
-          <div class="field-error" id="yMonthErr"></div>
-        </div>
-        <div class="field">
-          <label>Day</label>
-          <input type="number" id="yDay" placeholder="1–30" min="1" max="30" oninput="onInputChange(this,'yDayErr')">
-          <div class="field-error" id="yDayErr"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Dating Scan panel -->
-    <div class="method-panel" id="panelScan">
-      <div class="section-head">
-        <div class="dot" style="background:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.12)"></div>
-        <h3>Dating Scan (1st Trimester)</h3>
-      </div>
-      <div class="scan-note">
-        Enter the <strong>scan date</strong> and the <strong>GA at scan</strong> (weeks + days as reported by sonologist). EDD and current POG will be back-calculated.
-      </div>
-
-      <!-- Scan date -->
-      <div class="section-head" style="margin-bottom:10px">
-        <h3 style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">Scan Date (BS)</h3>
-      </div>
-      <div class="date-grid" style="margin-bottom:16px">
-        <div class="field">
-          <label>Year</label>
-          <input type="number" id="sYear" placeholder="e.g. 2081" min="2079" max="2086" oninput="onInputChange(this,'sYearErr')">
-          <div class="field-error" id="sYearErr"></div>
-        </div>
-        <div class="field">
-          <label>Month</label>
-          <select id="sMonth" onchange="onSelectChange(this,'sMonthErr')"></select>
-          <div class="field-error" id="sMonthErr"></div>
-        </div>
-        <div class="field">
-          <label>Day</label>
-          <input type="number" id="sDay" placeholder="1–30" min="1" max="30" oninput="onInputChange(this,'sDayErr')">
-          <div class="field-error" id="sDayErr"></div>
-        </div>
-      </div>
-
-      <!-- GA at scan -->
-      <div class="section-head" style="margin-bottom:10px">
-        <h3 style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">Gestational Age at Scan</h3>
-      </div>
-      <div class="ga-grid">
-        <div class="field">
-          <label>Weeks</label>
-          <input type="number" id="gaWeeks" placeholder="e.g. 10" min="6" max="13" oninput="onInputChange(this,'gaWeeksErr')">
-          <div class="field-error" id="gaWeeksErr"></div>
-        </div>
-        <div class="field">
-          <label>Days (0–6)</label>
-          <input type="number" id="gaDays" placeholder="e.g. 3" min="0" max="6" oninput="onInputChange(this,'gaDaysErr')">
-          <div class="field-error" id="gaDaysErr"></div>
-        </div>
-      </div>
-    </div>
-
-    <button class="calc-btn" onclick="calculate()">
-      Calculate
-    </button>
-  </div>
-
-  <!-- Result -->
-  <div class="result-wrap" id="resultWrap">
-    <div class="result-card">
-      <div class="result-header">
-        <span>Results</span>
-        <button class="copy-btn" id="copyBtn" onclick="copyResult()" style="display:none">
-          Copy
-        </button>
-      </div>
-      <div class="result-body" id="resultBody">
-        <div class="result-empty">
-          
-          Fill in both dates above and tap <strong>Calculate</strong>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Info -->
-  <div class="info-banner">
-    
-    <span><strong>LMP method:</strong> EDD = LMP + 9 months + 7 days.</span>
-  </div>
-
-  <!-- Footer -->
- <footer >
-    <a href = "https://www.jimisyangbo.com.np/" target="_blank" style="text-decoration: none;" ><strong>by @Jimi Syangbo</strong> · MBBS 4th Year, MMC</a>
-  </footer>
-
-  </div><!-- end appPageOB -->
-
-  <!-- ═══ FETAL GROWTH PAGE ═══ -->
-  <div class="app-page" id="appPageFG">
-
-  <div class="fg-card">
-    <!-- GA Input -->
-    <div class="fg-section-head">
-      <div class="fg-dot" style="background:var(--teal);box-shadow:0 0 0 3px var(--teal-dim)"></div>
-      <h3>Gestational Age</h3>
-    </div>
-    <div class="ga-row">
-      <div class="meas-field">
-        <label>Weeks</label>
-        <input type="number" id="fgWeeks" placeholder="14 – 40" min="14" max="40" oninput="fgInputChange(this)">
-        <div class="field-error" id="fgWeeksErr"></div>
-      </div>
-      <div class="meas-field">
-        <label>Days (0–6)</label>
-        <input type="number" id="fgDays" placeholder="0 – 6" min="0" max="6" oninput="fgInputChange(this)">
-        <div class="field-error" id="fgDaysErr"></div>
-      </div>
-    </div>
-
-    <div class="fg-sep"></div>
-
-    <!-- Sex selection (for EFW by sex) -->
-    <div class="fg-section-head">
-      <div class="fg-dot" style="background:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,0.12)"></div>
-      <h3>Fetal Sex <span style="font-size:10px;font-weight:400;color:var(--muted);text-transform:none;">(for EFW by sex — optional)</span></h3>
-    </div>
-    <div class="sex-row">
-      <button class="sex-btn active" id="sexUnknown" onclick="setSex('unknown')">Unknown</button>
-      <button class="sex-btn" id="sexMale"    onclick="setSex('male')">Male</button>
-      <button class="sex-btn" id="sexFemale"  onclick="setSex('female')">Female</button>
-    </div>
-
-    <div class="fg-sep"></div>
-
-    <!-- Measurements -->
-    <div class="fg-section-head">
-      <div class="fg-dot" style="background:var(--gold);box-shadow:0 0 0 3px rgba(217,119,6,0.12)"></div>
-      <h3>Measurements <span style="font-size:10px;font-weight:400;color:var(--muted);text-transform:none;">(mm — leave blank to skip)</span></h3>
-    </div>
-    <div class="meas-grid">
-      <div class="meas-field">
-        <label>HC (mm)</label>
-        <input type="number" id="fgHC" placeholder="Head Circ." min="50" max="400" step="0.1" oninput="fgInputChange(this)">
-        <div class="field-error" id="fgHCErr"></div>
-      </div>
-      <div class="meas-field">
-        <label>AC (mm)</label>
-        <input type="number" id="fgAC" placeholder="Abdom. Circ." min="50" max="400" step="0.1" oninput="fgInputChange(this)">
-        <div class="field-error" id="fgACErr"></div>
-      </div>
-      <div class="meas-field">
-        <label>FL (mm)</label>
-        <input type="number" id="fgFL" placeholder="Femur Length" min="5" max="100" step="0.1" oninput="fgInputChange(this)">
-        <div class="field-error" id="fgFLErr"></div>
-      </div>
-      <div class="meas-field">
-        <label>BPD (mm)</label>
-        <input type="number" id="fgBPD" placeholder="Biparietal" min="20" max="120" step="0.1" oninput="fgInputChange(this)">
-        <div class="field-error" id="fgBPDErr"></div>
-      </div>
-      <div class="meas-field">
-        <label>HL (mm)</label>
-        <input type="number" id="fgHL" placeholder="Humerus" min="5" max="80" step="0.1" oninput="fgInputChange(this)">
-        <div class="field-error" id="fgHLErr"></div>
-      </div>
-      <div class="meas-field">
-        <label>EFW (g)</label>
-        <input type="number" id="fgEFW" placeholder="Est. Fetal Wt." min="50" max="5000" step="1" oninput="fgInputChange(this)">
-        <div class="field-error" id="fgEFWErr"></div>
-      </div>
-    </div>
-    <div id="hadlockNote" style="font-size:11px;color:var(--teal);margin-top:8px;font-family:JetBrains Mono,monospace;min-height:16px;padding:0 2px;"></div>
-
-    <button class="calc-btn" style="margin-top:20px;" onclick="calculateFG();">
-      Calculate Percentiles
-    </button>
-  </div>
-
-  <!-- FG Results -->
-  <div class="fg-result-wrap" id="fgResultWrap">
-    <div class="fg-result-card">
-      <div class="fg-result-header">
-        <span>Percentile Results</span>
-      </div>
-      <div id="fgResultBody">
-        <div class="fg-empty">Enter GA and at least one measurement, then tap Calculate.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Chart -->
-  <div class="fg-chart-wrap" id="fgChartWrap" style="display:none">
-    <div class="fg-chart-title">Growth Chart</div>
-    <div class="chart-tabs" id="chartTabs"></div>
-    <canvas class="fg-canvas" id="fgCanvas"></canvas>
-  </div>
-
-  <!-- FG Info -->
-  <div class="fg-info-banner">
-    Based on <strong>WHO Fetal Growth Charts</strong> (Kiserud et al., PLOS Medicine 2017 &mdash; <a href="https://github.com/jcarvalho45/whoFetalGrowth" target="_blank" style="color:var(--teal)">coefficients</a>).
-  
-  </div>
-
-   <footer >
-    <a href = "https://www.jimisyangbo.com.np/" target="_blank" style="text-decoration: none;" ><strong>by @Jimi Syangbo</strong> · MBBS 4th Year, MMC</a>
-  </footer>
-
-  </div><!-- end appPageFG -->
-
-  <!-- ═══ BLOOD GLUCOSE PAGE ═══ -->
-  <div class="app-page" id="appPageBG">
-
-  <div class="card">
-    <!-- Converter -->
-    <div class="section-head">
-      <div class="dot" style="background:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,0.12)"></div>
-      <h3>Unit Converter</h3>
-    </div>
-
-    <div class="date-grid" style="margin-bottom:6px">
-      <div class="field">
-        <label>mmol/L</label>
-        <input type="number" id="bgMmol" placeholder="e.g. 5.1" step="0.1"
-          oninput="bgConvert('mmol')" class="field-input">
-        <div class="field-error" id="bgMmolErr"></div>
-      </div>
-      <div class="field" style="display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--teal);padding-top:18px">
-        ⇌
-      </div>
-      <div class="field">
-        <label>mg/dL</label>
-        <input type="number" id="bgMgdl" placeholder="e.g. 92" step="1"
-          oninput="bgConvert('mgdl')" class="field-input">
-        <div class="field-error" id="bgMgdlErr"></div>
-      </div>
-    </div>
-    <div id="bgConvertNote" style="font-size:11px;color:var(--muted);font-family:JetBrains Mono,monospace;margin-bottom:4px;min-height:16px;"></div>
-
-    <div class="section-sep"></div>
-
-    <!-- OGTT -->
-    <div class="section-head">
-      <div class="dot" style="background:var(--gold);box-shadow:0 0 0 3px rgba(217,119,6,0.12)"></div>
-      <h3>OGTT Analysis <span style="font-size:10px;font-weight:400;color:var(--muted);text-transform:none;">(75g — GDM Diagnosis per IADPSG/WHO 2013)</span></h3>
-    </div>
-
-
-    <div class="date-grid" style="margin-bottom:6px">
-      <div class="field">
-        <label>Fasting (mg/dL)</label>
-        <input type="number" id="ogttF" placeholder="≥92 = GDM" step="1"
-          oninput="ogttAnalyze()" class="field-input">
-      </div>
-      <div class="field">
-        <label>1-Hour (mg/dL)</label>
-        <input type="number" id="ogtt1h" placeholder="≥180 = GDM" step="1"
-          oninput="ogttAnalyze()" class="field-input">
-      </div>
-      <div class="field">
-        <label>2-Hour (mg/dL)</label>
-        <input type="number" id="ogtt2h" placeholder="≥153 = GDM" step="1"
-          oninput="ogttAnalyze()" class="field-input">
-      </div>
-    </div>
-
-    <div id="ogttResult" style="margin-top:8px;"></div>
-
-    <button class="calc-btn" onclick="ogttShare()" id="ogttShareBtn" style="display:none;margin-top:12px;">
-      Copy Result
-    </button>
-  </div>
-
-  <!-- <div class="info-banner" style="margin-top:12px;">
-    <span>
-      <strong>Conversion:</strong> mg/dL = mmol/L &times; 18.018 &nbsp;|&nbsp; mmol/L = mg/dL &divide; 18.018<br>
-      <strong>OGTT criteria:</strong> IADPSG 2010 / WHO 2013 (75g oral glucose, venous plasma). Diagnosis requires &ge;1 abnormal value.
-      Always confirm with clinical judgement.
-    </span>
-  </div> -->
-
-   <footer >
-    <a href = "https://www.jimisyangbo.com.np/" target="_blank" style="text-decoration: none;" ><strong>by @Jimi Syangbo</strong> · MBBS 4th Year, MMC</a>
-  </footer>
-
-  </div><!-- end appPageBG -->
-
-
-</div>
-
-<!-- Scripts -->
-
-
-</html>
-
-
-<!-- App Script -->
-<script src="app.js?v=3"></script>
+<script>
+(function(){
+  var r=document.documentElement,b=document.getElementById('theme');
+  function dark(){var t=r.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+  b.addEventListener('click',function(){r.setAttribute('data-theme',dark()?'light':'dark')});
+})();
+</script>
 
 <!-- Service Worker -->
 <script>
@@ -421,6 +136,5 @@ if ('serviceWorker' in navigator) {
   });
 }
  </script>
-
 </body>
 </html>

@@ -1,0 +1,59 @@
+
+.back-wrapper {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 20px 20px 0;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border: 1px solid var(--border, #E2E8F0);
+  border-radius: 10px;
+  background: var(--card, #FFFFFF);
+  color: var(--teal, #0F766E);
+  box-shadow: var(--shadow, 0 1px 2px rgba(15,25,35,.04));
+  font-family: var(--sans, 'DM Sans', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: fit-content;
+  transition: background .2s, border-color .2s,
+              transform .2s, box-shadow .2s;
+}
+
+.back-button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.back-button:hover {
+  background: var(--result, #F0FDF9);
+  border-color: var(--teal, #0F766E);
+  box-shadow: var(--shadow-h, 0 4px 12px rgba(15,118,110,.12));
+  transform: translateX(-2px);
+}
+
+.back-button:focus-visible {
+  outline: 3px solid var(--teal-b, #14B8A6);
+  outline-offset: 3px;
+}
+
+.back-button:active {
+  transform: translateX(-1px) scale(.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-button {
+    transition: none;
+  }
+}
