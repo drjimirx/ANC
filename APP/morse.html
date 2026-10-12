@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Morse Code Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="back.css">
+   <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap');
+
+:root{
+    --teal:#0F766E; --teal-b:#14B8A6; --mint:#CCFBF1;
+    --t1:#0F1923; --t3:#4A5568; --t4:#718096;
+    --border:#E2E8F0; --bg:#F8FAFC; --card:#FFFFFF; --result:#F0FDF9; --field:#FFFFFF;
+    --ring:rgba(20,184,166,.28);
+    --shadow:0 1px 2px rgba(15,25,35,.04), 0 2px 6px rgba(15,25,35,.04), 0 12px 32px rgba(15,25,35,.06);
+    --serif:'DM Serif Display', Georgia, 'Times New Roman', serif;
+    --sans:'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top, 0px);
+    padding-bottom:env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark){
+    :root{
+        --teal:#14B8A6; --teal-b:#2DD4BF; --mint:#CCFBF1;
+        --t1:#E2E8F0; --t3:#CBD5E1; --t4:#64748B;
+        --border:#1E3A4A; --bg:#020C14; --card:#0C1E2E; --result:#0A2232; --field:#071722;
+        --ring:rgba(45,212,191,.3);
+        --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.35);
+    }
+}
+
+*, *::before, *::after{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+html{
+    min-height:100%;
+    scroll-padding-top:env(safe-area-inset-top, 0px);
+    background:var(--bg) linear-gradient(135deg, #0F766E 0%, #065F46 100%) top / 100% 260px no-repeat;
+}
+
+body{
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.5;
+    color:var(--t1);
+    max-width:640px;
+    width:100%;
+    margin:0 auto;
+    padding:0 16px 48px;
+    -webkit-font-smoothing:antialiased;
+}
+
+h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(2rem, 7vw, 2.75rem);
+    line-height:1.1;
+    text-align:center;
+    color:#fff;
+    margin:0;
+    padding:56px 0 72px;
+}
+h1::after{
+    content:"";
+    display:block;
+    width:40px;
+    height:3px;
+    border-radius:2px;
+    background:var(--teal-b);
+    margin:16px auto 0;
+}
+
+br{ display:none; }
+
+form{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:24px;
+    box-shadow:var(--shadow);
+    margin:0 0 20px;
+    transition:background .3s, border-color .3s;
+}
+#decode-form{ margin-top:-40px; }
+
+label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+    font-size:11px;
+    font-weight:600;
+    color:var(--t3);
+    text-transform:uppercase;
+    letter-spacing:.1em;
+}
+label::before{
+    content:"";
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--teal);
+}
+
+textarea{
+    display:block;
+    width:100%;
+    min-height:110px;
+    padding:14px 16px;
+    font-family:var(--mono);
+    font-size:15px;
+    line-height:1.6;
+    color:var(--t1);
+    background:var(--field);
+    border:1.5px solid var(--border);
+    border-radius:9px;
+    outline:none;
+    resize:vertical;
+    transition:border-color .2s, box-shadow .2s;
+}
+textarea:hover{ border-color:var(--t4); }
+textarea:focus{ border-color:var(--teal); box-shadow:0 0 0 4px var(--ring); }
+
+button[type="submit"]{
+    display:block;
+    width:100%;
+    margin-top:16px;
+    min-height:48px;
+    padding:12px 20px;
+    border:0;
+    border-radius:10px;
+    background:linear-gradient(135deg, #0F766E, #065F46);
+    color:#fff;
+    font-family:var(--sans);
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:.01em;
+    cursor:pointer;
+    box-shadow:0 1px 2px rgba(6,95,70,.3);
+    transition:transform .2s, box-shadow .25s, filter .2s;
+}
+button[type="submit"]:hover{
+    box-shadow:0 8px 20px rgba(15,118,110,.3);
+    filter:brightness(1.06);
+    transform:translateY(-1px);
+}
+button[type="submit"]:active{ transform:translateY(0); }
+button:focus-visible{ outline:3px solid var(--ring); outline-offset:2px; }
+
+#english-output, #morse_code-output{
+    margin-top:16px;
+    min-height:56px;
+    width:100%;
+    padding:16px;
+    font-family:var(--mono);
+    font-size:16px;
+    font-weight:500;
+    line-height:1.7;
+    letter-spacing:.06em;
+    color:var(--t1);
+    background:var(--result);
+    border:1px solid var(--border);
+    border-left:3px solid var(--teal);
+    border-radius:9px;
+    overflow-wrap:anywhere;
+    animation:rise .3s ease;
+}
+#english-output:empty, #morse_code-output:empty{
+    background:transparent;
+    border:1px dashed var(--border);
+    animation:none;
+}
+
+@keyframes rise{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+
+#void{
+    min-height:0;
+    display:block;
+}
+footer{ min-height:40px; }
+
+@media (max-width:480px){
+    body{ padding:0 12px 40px; }
+    form{ padding:20px 16px; }
+    h1{ padding:44px 0 64px; }
+}
+@media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; animation:none !important; }
+}
+   </style>
+</head>
+
+<body>
+    <h1>Morse Code Converter</h1>
+    <form id="decode-form">
+        <label for="morse_code">Morse Code:</label>
+        <textarea id="morse_code" name="morse_code"></textarea>
+        <br>
+        <button type="submit">Decode</button>
+        <div id="english-output"></div>
+    </form>
+    <br>
+    <br>
+    <br>
+    <form id="encode-form">
+        <label for="english">English:</label>
+        <textarea id="english" name="english"></textarea>
+        <br>
+        <button type="submit">Encode</button>
+        <div id="morse_code-output"></div>
+    </form>
+    <div id = "void">
+    
+        <div class="back-wrapper">
+  <div class="back-button" id="medinnova-back" role="button"
+       tabindex="0" aria-label="Go back">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    <span>Back to MEDINNOVA</span>
+  </div>
+</div>
+   
+    <footer>
+
+    </footer>
+<script src="back.js"></script>
+    <script >
+        const morseCodeMapping = {
+    'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 
+    'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..', 
+    'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 
+    'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 
+    'Y': '-.--', 'Z': '--..',
+    '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', 
+    '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+    ' ': '/'
+};
+
+function morseToEnglish(morseCode) {
+    let english = '';
+    let words = morseCode.split(' / ');
+    for (let word of words) {
+        let letters = word.split(' ');
+        for (let letter of letters) {
+            for (let key in morseCodeMapping) {
+                if (morseCodeMapping[key] === letter) {
+                    english += key;
+                }
+            }
+        }
+        english += ' ';
+    }
+    return english.trim();
+}
+
+function englishToMorse(english) {
+    let morseCode = '';
+    let words = english.toUpperCase().split(' ');
+    for (let word of words) {
+        for (let letter of word) {
+            if (morseCodeMapping[letter]) {
+                morseCode += morseCodeMapping[letter] + ' ';
+            }
+        }
+        morseCode += '/ ';
+    }
+    return morseCode.trim();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const decodeForm = document.getElementById('decode-form');
+    const encodeForm = document.getElementById('encode-form');
+
+    decodeForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const morseCode = document.getElementById('morse_code').value;
+        const english = morseToEnglish(morseCode);
+        document.getElementById('english-output').innerHTML = english;
+    });
+
+    encodeForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const english = document.getElementById('english').value;
+        const morseCode = englishToMorse(english);
+        document.getElementById('morse_code-output').innerHTML = morseCode;
+    });
+});
+    </script>
+</body>
+
+</html>

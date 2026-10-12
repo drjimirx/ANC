@@ -1,5 +1,5 @@
 
-const CACHE = 'antenatal-v-15';
+const CACHE = 'antenatal-v-5.1';
 
 const URLS = [
   './',
@@ -12,7 +12,8 @@ const URLS = [
 
   // Medical tools
   './APP/anc.html',
-  './APP/bmi.html'
+  './APP/bmi.html',
+  './APP/morse.html'
 ];
 
 self.addEventListener('install', function (e) {
