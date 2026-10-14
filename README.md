@@ -1,6 +1,5 @@
 
-# Introducing
-# JMed
+# Introducing JMed
 
 
 ## Features
