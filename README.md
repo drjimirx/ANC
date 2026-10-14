@@ -1,12 +1,11 @@
-# Antenatal Calculator
+# JMed
 
 
 ## Features
-- EDD & POG calculation by LMP (Nepali B.S. date)
-- EDD & POG calculation by 1st Trimester Dating Scan
-- WHO Fetal Growth Calculator (HC, AC, FL, BPD, HL, EFW)
-  - Percentiles based on Kiserud et al. PLOS Medicine 2017
-  - Coefficients: github.com/jcarvalho45/whoFetalGrowth
+- ANC Calculator
+- BMI Calculator
+- Morse Code encrypt and decrypt
+- AES 256 Based data encryption
 
 
 
